@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Button</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <button id="button">Click Me</button>
+    <p>Button Clicked: <span id="click-count">0</span></p>
+
+    <script>
+        const socket = io(); // Automatically connects to the serverless function
+
+        // Listen for 'update' event from the server
+        socket.on("update", (count) => {
+            document.getElementById("click-count").innerText = count;
+        });
+
+        // Emit 'buttonClicked' event when button is clicked
+        document.getElementById("button").addEventListener("click", () => {
+            socket.emit("buttonClicked");
+        });
+    </script>
+</body>
+</html>
